@@ -2,7 +2,7 @@
 
 import random
 
-from french_card_deck import FrenchCardDeck
+from card_deck.french_card_deck import FrenchCardDeck
 
 deck_of_cards = FrenchCardDeck()
 
