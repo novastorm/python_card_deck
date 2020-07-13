@@ -71,6 +71,10 @@ class FrenchCardDeck(GameDeck):
             )
         return self._total_number_of_cards
 
+    @property
+    def card_index(self):
+        return self._card_index
+
     @classmethod
     def generate_card_deck(cls, number_of_decks=1):
         a_deck = cls()
