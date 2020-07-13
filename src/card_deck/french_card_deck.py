@@ -1,9 +1,14 @@
 import random
 
-from card_deck import Card, CardExtension, GameDeck
+import card_deck
 
-class FrenchCard(CardExtension):
-    class Face(CardExtension.Face):
+from card_deck import GameDeck
+
+class Card(card_deck.CardExtension, card_deck.Card):
+    pass
+
+class FrenchCard(Card):
+    class Face(Card.Face):
         ace = 'ace'
         two = 'two'
         three = 'three'
@@ -19,21 +24,21 @@ class FrenchCard(CardExtension):
         king = 'king'
 
 
-    class Suit(CardExtension.Suit):
+    class Suit(Card.Suit):
         spades = 'spades'
         hearts = 'hearts'
         clubs = 'clubs'
         diamonds = 'diamonds'
 
     @property
-    def face(self) -> Face:
+    def face(self) -> Card.Face:
         return self._face
 
     @property
-    def suit(self) -> Suit:
+    def suit(self) -> Card.Suit:
         return self._suit
 
-    def __init__(self, face: Face, suit: Suit):
+    def __init__(self, face: Card.Face, suit: Card.Suit):
         self._face = face
         self._suit = suit
 
