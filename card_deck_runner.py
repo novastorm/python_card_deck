@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import enum
+import json
 import random
 
 from card_deck.french_card_deck import FrenchCardDeck, FrenchCard
@@ -35,6 +36,13 @@ class CardState(enum.Enum):
     down = 'down'
     up = 'up'
 
+    def __str__(self):
+        return self.value
+
+    @property
+    def serialize(self):
+        return self.value
+
 
 class BlackJackCard():
 
@@ -56,9 +64,15 @@ class BlackJackCard():
 
     @property
     def serialize(self):
+        card = None
+        if self.state == CardState.up:
+            card = {
+                'face': self.face.value,
+                'suit': self.suit.value
+            }
         return {
-            'card': self._card if self.state == CardState.up else None,
-            'state': self.state
+            'card': card,
+            'state': self.state.serialize
         }
 
     def __init__(self, card, state=CardState.down):
@@ -311,5 +325,9 @@ game.add_player(player1, 1)
 print(game)
 
 game.deal_starting_hands()
+print()
 print(game)
+
+print()
+print(json.dumps(game.serialize, sort_keys=True, indent=2))
 
