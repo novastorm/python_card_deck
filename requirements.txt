@@ -1,0 +1,2 @@
+-e git+git@github.com:novastorm/python_card_deck.git@091646e779cd8501be56333b056c142db3bb2be4#egg=Card_Deck
+tox==3.19.0
