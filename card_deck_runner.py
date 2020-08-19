@@ -142,7 +142,13 @@ class BlackJackPlayer():
 
     @property
     def hand(self):
+        return self._get_hand()
+
+    def _get_hand(self):
         return self._hand
+
+    def _set_hand(self, new_value):
+        self._hand = new_value
 
     @property
     def serialize(self):
@@ -154,12 +160,19 @@ class BlackJackPlayer():
     def add_card(self, card):
         self._hand.add_card(card)
 
+    def next_hand(self):
+        self._completed_hands.append(self.hand)
+        if self._pending_hands:
+            self._set_hand(self._pending_hands.pop())
+
     def clear_hand(self):
         self._hand.clear_card_list()
 
     def __init__(self, name=None):
         self._hand = BlackJackHand()
         self._name = name
+        self._pending_hands = []
+        self._completed_hands = []
 
 
 class BlackJackGame():
@@ -314,20 +327,19 @@ def calculate_value_of_hand(hand):
 
     return (value, is_soft)
         
-
+def print_game(game):
+    print()
+    print(json.dumps(game.serialize, sort_keys=True, indent=2))
 
 #start_game()
 game = BlackJackGame()
-print(game)
+print_game(game)
 
 player1 = BlackJackPlayer('Player 1')
 game.add_player(player1, 1)
-print(game)
+print_game(game)
 
 game.deal_starting_hands()
-print()
-print(game)
 
-print()
-print(json.dumps(game.serialize, sort_keys=True, indent=2))
+print_game(game)
 
